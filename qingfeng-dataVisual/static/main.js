@@ -1,6 +1,8 @@
 // 初始化各个柱状图的颜色
 var colorMap = new Map()
-var timeOut=80
+// var timeOut=80
+// var barCount=15
+
 function initColorMap(category) {
     var colorSet=new Set()
     while(true){
@@ -21,7 +23,7 @@ function initColorMap(category) {
             break
         }
     }
-    console.log(colorMap)
+    // console.log(colorMap)
 }
 
 // 基于准备好的dom，初始化echarts实例
@@ -69,7 +71,7 @@ var option = {
             color: "black",
             fontStyle: 'normal',
             fontWeight: 'bold',
-            fontSize: 18,
+            // fontSize: 18,
             // lineHeight: 40,
             // width:200,
             // textAlign:'right',
@@ -89,9 +91,9 @@ var option = {
         axisLabel: {
             width: 150,
             show: true,
-            fontSize: 20,
-            fontWeight: 'bold',
-            rotate: -10,
+            fontSize: 15,
+            // fontWeight: 'bold',
+            // rotate: -10,
 
             color: function (params) {
                 // console.log(params)
@@ -108,10 +110,10 @@ var option = {
 
             textBorderColor: 'black',
             textBorderWidth: 2,
-            textShadowColor: 'gray',
-            textShadowBlur: 5,
-            textShadowOffsetX: 3,
-            textShadowOffsetY: 5,
+            // textShadowColor: 'gray',
+            // textShadowBlur: 5,
+            // textShadowOffsetX: 3,
+            // textShadowOffsetY: 5,
 
         },
 
@@ -148,10 +150,11 @@ var option = {
                 offset: [10, 0],
                 show: true,
                 position: 'right',
-                fontSize: 18,
-                color: function (params) {
-                    return colorMap.get(params.name)
-                },
+                fontSize: 15,
+                // color: function (params) {
+                //     return colorMap.get(params.name)
+                // },
+                color:'black',
 
                 borderColor: 'auto',
                 borderWidth: '2px',
@@ -200,15 +203,20 @@ function draw(all_data) {
     // console.log(arr[0][1])
     data_len=arr[0][1][0]['x_data'].length
     var c=window.setInterval(function(){
-        chart_data = new Map()
         data=arr[i]
-        // console.log(data)
+        if(typeof data== 'undefined'){
+            console.log(i+'    end...')
+            window.clearInterval(c)
+            return
+        }
+
+        chart_data = new Map()
         var title=data[0]+mesg
         e_data=data[1]
         if(data_len>10){
             x_data = []
             y_label = []
-            for (var datai = data_len - 10; datai < data_len; datai = datai + 1) {
+            for (var datai = data_len - barCount; datai < data_len; datai = datai + 1) {
                 x_data.push(e_data[ei]['x_data'][datai])
                 y_label.push(e_data[ei]['y_label'][datai])
             }
@@ -224,9 +232,8 @@ function draw(all_data) {
             ei=0
             i++
         }
-        if(ei>=data[1].length&i>=arr.length){
-            window.clearInterval(c)
-        }
+
+
     },timeOut)
 
 }
