@@ -1,3 +1,3 @@
-var genDataCount=110
-var timeOut=95
-var barCount=12
+var genDataCount=20
+var timeOut=120
+var barCount=5

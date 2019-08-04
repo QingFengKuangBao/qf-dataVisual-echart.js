@@ -4,22 +4,22 @@ var colorMap = new Map()
 // var barCount=15
 
 function initColorMap(category) {
-    var colorSet=new Set()
-    while(true){
-        var c='rgb('+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+','+Math.floor(Math.random()*255)+')'
+    var colorSet = new Set()
+    while (true) {
+        var c = 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')'
         // console.log(c)
         colorSet.add(c)
-        if(colorSet.size>=category.length){
+        if (colorSet.size >= category.length) {
             break
         }
     }
-    var i=0;
-    var values=colorSet.values()
-    while(true){
+    var i = 0;
+    var values = colorSet.values()
+    while (true) {
         // console.log(c)
-        colorMap.set(category[i],values.next().value)
+        colorMap.set(category[i], values.next().value)
         i++
-        if(i>=category.length){
+        if (i >= category.length) {
             break
         }
     }
@@ -91,7 +91,7 @@ var option = {
         axisLabel: {
             width: 150,
             show: true,
-            fontSize: 15,
+            //fontSize: 15,
             // fontWeight: 'bold',
             // rotate: -10,
 
@@ -136,10 +136,10 @@ var option = {
                 borderWidth: 2,
                 borderColor: 'black',
                 barBorderRadius: 10,
-                shadowColor: 'rgba(0, 0, 0, 0.5)',
-                shadowBlur: 10,
-                shadowOffsetX: 7,
-                shadowOffsetY: 7,
+                //shadowColor: 'rgba(0, 0, 0, 0.5)',
+                //shadowBlur: 10,
+                //shadowOffsetX: 7,
+                //shadowOffsetY: 7,
                 opacity: 0.8,
             },
             emphasis: {
@@ -150,17 +150,17 @@ var option = {
                 offset: [10, 0],
                 show: true,
                 position: 'right',
-                fontSize: 15,
+                //fontSize: 15,
                 // color: function (params) {
                 //     return colorMap.get(params.name)
                 // },
-                color:'black',
+                color: 'black',
 
                 borderColor: 'auto',
                 borderWidth: '2px',
-                padding: 5,
-                borderRadius: 10,
-                shadowColor: 'auto',
+                padding: 3,
+                borderRadius: 5,
+                //shadowColor: 'auto',
                 shadowBlur: 50,
                 // fontWeight:'bold',
                 // formatter: '{c',
@@ -190,50 +190,56 @@ function initChart(chart_data, title) {
 
 function draw(all_data) {
     myChart = echarts.init(document.getElementById('mychart'));
-    var mesg=all_data.get('mesg')
+    var mesg = all_data.get('mesg')
     var i = 0
     var category = all_data.get('category')
     var year_data = all_data.get('data')
+    if (barCount > category.length) {
+        barCount = category.length
+    }
     // console.log(year_data)
     var arr = Array.from(year_data)
     // console.log(arr)
     initColorMap(category)
-    var i=0
-    var ei=0
+    var i = 0
+    var ei = 0
     // console.log(arr[0][1])
-    data_len=arr[0][1][0]['x_data'].length
-    var c=window.setInterval(function(){
-        data=arr[i]
-        if(typeof data== 'undefined'){
-            console.log(i+'    end...')
+    data_len = arr[0][1][0]['x_data'].length
+    var c = window.setInterval(function () {
+        data = arr[i]
+        if (typeof data == 'undefined') {
+            console.log(i + '    end...')
             window.clearInterval(c)
             return
         }
 
         chart_data = new Map()
-        var title=data[0]+mesg
-        e_data=data[1]
-        if(data_len>10){
-            x_data = []
-            y_label = []
-            for (var datai = data_len - barCount; datai < data_len; datai = datai + 1) {
-                x_data.push(e_data[ei]['x_data'][datai])
-                y_label.push(e_data[ei]['y_label'][datai])
-            }
-            chart_data.set('x_data', x_data)
-            chart_data.set('y_label', y_label)
-        }else{
-            chart_data.set('x_data', e_data[ei]['x_data'])
-            chart_data.set('y_label', e_data[ei]['y_label'])
+        var title = data[0] + mesg
+        e_data = data[1]
+        // if(data_len>10){
+        if (data_len < barCount) {
+            barCount = data_len
         }
-        initChart(chart_data,title)
+        x_data = []
+        y_label = []
+        for (var datai = data_len - barCount; datai < data_len; datai = datai + 1) {
+            x_data.push(e_data[ei]['x_data'][datai])
+            y_label.push(e_data[ei]['y_label'][datai])
+        }
+        chart_data.set('x_data', x_data)
+        chart_data.set('y_label', y_label)
+        // }else{
+        //     chart_data.set('x_data', e_data[ei]['x_data'])
+        //     chart_data.set('y_label', e_data[ei]['y_label'])
+        // }
+        initChart(chart_data, title)
         ei++
-        if(ei>=data[1].length){
-            ei=0
+        if (ei >= data[1].length) {
+            ei = 0
             i++
         }
 
 
-    },timeOut)
+    }, timeOut)
 
 }

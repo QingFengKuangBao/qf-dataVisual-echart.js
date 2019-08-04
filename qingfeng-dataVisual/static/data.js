@@ -47,7 +47,8 @@ function getDataFile() {
                     geni = 0
                     let space = eval(end - start) / genDataCount
                     while (true) {
-                        temp.push( Math.floor((parseInt(start) + space * geni)))
+                        var v=(parseInt(start) + space * geni).toFixed(2)
+                        temp.push(v<0?0:v)
                         geni++
                         if (geni > genDataCount) {
                             break
@@ -77,7 +78,7 @@ function dealData() {
     var data = all_data.get('data')
     // console.log(data)
     for (let i = 1; i < d_yaer.length; i++) {
-        var y_label = []
+        var y_label = new Set()
         var x_data = []
         var origi_data = []
         var data = all_data.get('data')
@@ -93,8 +94,14 @@ function dealData() {
             return a - b
         })
         for (let xi in x_data) {
-            y_label.push(category[origi_data.indexOf(x_data[xi])])
+            var indexList=getIndex(origi_data,x_data[xi])
+            // console.log(indexList)
+            for(let i in indexList){
+                y_label.add(category[indexList[i]])
+            }
+            // y_label.push(category[origi_data.indexOf(x_data[xi])])
         }
+        y_label=Array.from(y_label)
         // console.log(y_label)
         if (xy_map.has(d_yaer[i])) {
             xy_map.get(d_yaer[i]).push({
@@ -120,7 +127,7 @@ function dealData() {
     xy_map.clear()
     xy_map = new Map(arrayObj.map(i => [i[0], i[1]]))
 
-    // console.log(xy_map)
+    console.log(xy_map)
     //生成最终的数据
     final_data = new Map()
     final_data.set('category', category)
@@ -129,4 +136,15 @@ function dealData() {
 
     // console.log(final_data)
     draw(final_data)
+}
+
+
+function getIndex(arr,ele){
+    var indexList=[]
+    for(let i=0;i<arr.length;i++){
+        if(arr[i]==ele){
+            indexList.push(i)
+        }
+    }
+    return indexList
 }
