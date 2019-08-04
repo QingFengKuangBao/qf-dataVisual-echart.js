@@ -23,17 +23,13 @@ function getDataFile() {
                 mesg=d_year[0]
                 temp_year = []
                 temp_year.push('')
-                for (let yi = 1; yi < d_year.length; yi++) {
+                for (let yi = 1; yi < d_year.length-1; yi++) {
                     geni = 0
-                    if(yi==d_year.length-1){
-                        temp_year.push(d_year[yi])
-                        break
-                    }
                     start = d_year[yi+1]
                     while (true) {
                         geni++
                         temp_year.push(start)
-                        if (geni >= genDataCount) {
+                        if (geni > genDataCount) {
                             break
                         }
                     }
@@ -45,30 +41,21 @@ function getDataFile() {
                 l = lines[i].split(',')
                 temp = []
                 temp.push(l[0])
-                for (let li = 1; li < l.length; li++) {
+                for (let li = 1; li < l.length-1; li++) {
                     start = l[li]
-                    if(li==l.length-1){
-                        temp.push(start)
-                        break
-                    }
                     end = l[li + 1]
                     geni = 0
                     let space = eval(end - start) / genDataCount
                     while (true) {
                         temp.push( Math.floor((parseInt(start) + space * geni)))
                         geni++
-                        if (geni >= genDataCount) {
+                        if (geni > genDataCount) {
                             break
                         }
                     }
                 }
                 category.push(l[0])
                 data.push(temp)
-                // console.log(temp)
-
-                // ls_line = lines[i].split(',')
-                // category.push(ls_line[0])
-                // data.push(ls_line)
             }
         }
 
@@ -129,7 +116,7 @@ function dealData() {
     arrayObj.sort(function (a, b) {
         return a[0].localeCompare(b[0])
     })
-    // console.log(arrayObj)
+    console.log(arrayObj)
     xy_map.clear()
     xy_map = new Map(arrayObj.map(i => [i[0], i[1]]))
 
