@@ -1,5 +1,5 @@
 // 初始化各个柱状图的颜色
-var colorMap = new Map()
+// var colorMap = new Map()
 // var timeOut=80
 // var barCount=15
 
@@ -216,10 +216,8 @@ function draw(all_data) {
         chart_data = new Map()
         var title = data[0] + mesg
         e_data = data[1]
-        // if(data_len>10){
-        if (data_len < barCount) {
-            barCount = data_len
-        }
+        
+
         x_data = []
         y_label = []
         for (var datai = data_len - barCount; datai < data_len; datai = datai + 1) {
@@ -228,10 +226,7 @@ function draw(all_data) {
         }
         chart_data.set('x_data', x_data)
         chart_data.set('y_label', y_label)
-        // }else{
-        //     chart_data.set('x_data', e_data[ei]['x_data'])
-        //     chart_data.set('y_label', e_data[ei]['y_label'])
-        // }
+
         initChart(chart_data, title)
         ei++
         if (ei >= data[1].length) {

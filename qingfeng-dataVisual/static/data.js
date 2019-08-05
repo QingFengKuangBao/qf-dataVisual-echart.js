@@ -47,7 +47,7 @@ function getDataFile() {
                     geni = 0
                     let space = eval(end - start) / genDataCount
                     while (true) {
-                        var v=(parseInt(start) + space * geni).toFixed(2)
+                        var v=(parseInt(start) + space * geni).toFixed(decimal)
                         temp.push(v<0?0:v)
                         geni++
                         if (geni > genDataCount) {
