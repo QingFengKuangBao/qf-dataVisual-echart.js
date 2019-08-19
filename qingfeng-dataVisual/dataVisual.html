@@ -47,19 +47,29 @@
             text-align: center;
             /* display: none; */
         }
+
+
+        #data_time{
+            position: fixed ;
+            bottom: 10%;
+            right: 15%;
+            font-size: 60px;
+            font-weight: 800;
+            color: grey;
+        }
     </style>
 </head>
 
 <body>
     <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="mychart"  style="width: 100vw;;height:100vh;padding: 1vh 2vw;"></div>
+    <div id="mychart"  style="width: 99vw;;height:98vh;"></div>
 
     <div class="upload">
         <p style="text-align: center">csv数据文件上传</p>
         <input type="file" name="data" class="file" id='data_file' />
         <input type="button" value="上传" class="button" onclick="getDataFile()" />
     </div>
-
+    <div id='data_time'><div>
     <!-- <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script> -->
 	<!--引入js文件-->
     <script src="static/echart.js"></script>

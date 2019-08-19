@@ -26,155 +26,177 @@ function initColorMap(category) {
     // console.log(colorMap)
 }
 
+
+
+function initfontSize(){
+    // if(barCount<=10){
+    //     fontsize=32
+    // }else if(barCount<=20){
+    //     fontsize=26
+    // }else{
+    //     fontsize=20
+    // }
+    if(fontsize!=0){
+        return
+    }
+    fontsize=Math.floor(window.innerHeight/barCount*0.5)
+    console.log(fontsize)
+}
+
+var option
+function drawInit(category){
+    initfontSize()
+    initColorMap(category)
+    option = {
+        title: {
+            text: '',
+            left: 'center',
+            // top:'middle',
+            textStyle: {
+                color: "black",
+                fontStyle: 'normal',
+                fontWeight: 'bold',
+                fontSize: 30,
+                lineHeight: 40,
+                // width:200,
+                // textAlign:'right',
+                left: 'center',
+            },
+        },
+        tooltip: {
+            show: true,
+            trigger: 'axis',
+            textAlign: 'center',
+        },
+    
+        xAxis: {
+            position: 'top',
+            type: 'value',
+            axisTick: {
+                show: false,
+            },
+            axisLine: {
+                show: false,
+            },
+            axisLabel: {
+                show: false,
+            },
+            nameTextStyle: {
+                color: "black",
+                fontStyle: 'normal',
+                fontWeight: 'bold',
+                fontSize: fontsize,
+                // lineHeight: 40,
+                // width:200,
+                // textAlign:'right',
+                // left: 'center',
+            }
+        },
+        yAxis: {
+            type: 'category',
+            axisTick: {
+                show: false,
+            },
+            axisLine: {
+                show: false,
+            },
+    
+            data: [],
+            axisLabel: {
+                // width: 30,
+                show: true,
+                fontSize: fontsize,
+                // fontWeight: 'bold',
+                // rotate: -10,
+    
+                color: function (params) {
+                    // console.log(params)
+                    return colorMap.get(params)
+                },
+                margin: 5,
+                ailgn: 'center',
+                backgroundColor: 'auto',
+                padding: 5,
+    
+                // borderColor :'gray',
+                // borderWidth :2,
+                // borderRadius :8,
+    
+                textBorderColor: 'black',
+                textBorderWidth: 2,
+                // textShadowColor: 'gray',
+                // textShadowBlur: 5,
+                // textShadowOffsetX: 3,
+                // textShadowOffsetY: 5,
+    
+            },
+    
+            // nameTextStyle: {
+            //     // color: function (params) {
+            //     //     return colorMap.get(params.name)
+            //     // },
+            //     backgroundColor :'red',
+    
+            // },
+        },
+        series: [{
+                //barWidth: 50,
+                data: [],
+                type: 'bar',
+                itemStyle: {
+                    color: function (params) {
+                        return colorMap.get(params.name)
+                    },
+                    borderWidth: 2,
+                    borderColor: 'black',
+                    barBorderRadius: 10,
+                    //shadowColor: 'rgba(0, 0, 0, 0.5)',
+                    //shadowBlur: 10,
+                    //shadowOffsetX: 7,
+                    //shadowOffsetY: 7,
+                    opacity: 0.8,
+                },
+                emphasis: {
+    
+                },
+                label: {
+                    // rotate :-10,
+                    offset: [5, 0],
+                    show: true,
+                    position: 'right',
+                    fontSize: fontsize,
+                    // color: function (params) {
+                    //     return colorMap.get(params.name)
+                    // },
+                    color: 'black',
+    
+                    // borderColor: 'auto',
+                    // borderWidth: '2px',
+                    //padding: 3,
+                    //borderRadius: 5,
+                    //shadowColor: 'auto',
+                    //shadowBlur: 50,
+                    // fontWeight:'bold',
+                    // formatter: '{c',
+                    // lineHeight:25,
+                    // backgroundColor:'gray',
+                    textBorderColor: 'black',
+                    textBorderWidth: '2px',
+    
+                },
+                barCategoryGap: '50%',
+            },
+    
+        ],
+    }
+}
+
+
+
+
 // 基于准备好的dom，初始化echarts实例
 var myChart
 
-var option = {
-    title: {
-        text: '',
-        left: 'center',
-        // top:'middle',
-        textStyle: {
-            color: "black",
-            fontStyle: 'normal',
-            fontWeight: 'bold',
-            fontSize: 30,
-            lineHeight: 40,
-            // width:200,
-            // textAlign:'right',
-            left: 'center',
-        },
-    },
-    tooltip: {
-        show: true,
-        trigger: 'axis',
-        textAlign: 'center',
-    },
-
-    xAxis: {
-        position: 'top',
-        type: 'value',
-        // name: '人口增长率\n       %',
-        // axisLabel: {
-        //     formatter: '{value}'
-        // },
-        axisTick: {
-            show: false,
-        },
-        axisLine: {
-            show: false,
-        },
-        axisLabel: {
-            show: false,
-        },
-        nameTextStyle: {
-            color: "black",
-            fontStyle: 'normal',
-            fontWeight: 'bold',
-            // fontSize: 18,
-            // lineHeight: 40,
-            // width:200,
-            // textAlign:'right',
-            // left: 'center',
-        }
-    },
-    yAxis: {
-        type: 'category',
-        axisTick: {
-            show: false,
-        },
-        axisLine: {
-            show: false,
-        },
-
-        data: [],
-        axisLabel: {
-            width: 150,
-            show: true,
-            //fontSize: 15,
-            // fontWeight: 'bold',
-            // rotate: -10,
-
-            color: function (params) {
-                // console.log(params)
-                return colorMap.get(params)
-            },
-            margin: 8,
-            ailgn: 'center',
-            backgroundColor: 'auto',
-            padding: 5,
-
-            // borderColor :'gray',
-            // borderWidth :2,
-            // borderRadius :8,
-
-            textBorderColor: 'black',
-            textBorderWidth: 2,
-            // textShadowColor: 'gray',
-            // textShadowBlur: 5,
-            // textShadowOffsetX: 3,
-            // textShadowOffsetY: 5,
-
-        },
-
-        // nameTextStyle: {
-        //     // color: function (params) {
-        //     //     return colorMap.get(params.name)
-        //     // },
-        //     backgroundColor :'red',
-
-        // },
-    },
-    series: [{
-            // barWidth: 50,
-            data: [],
-            type: 'bar',
-            itemStyle: {
-                color: function (params) {
-                    return colorMap.get(params.name)
-                },
-                borderWidth: 2,
-                borderColor: 'black',
-                barBorderRadius: 10,
-                //shadowColor: 'rgba(0, 0, 0, 0.5)',
-                //shadowBlur: 10,
-                //shadowOffsetX: 7,
-                //shadowOffsetY: 7,
-                opacity: 0.8,
-            },
-            emphasis: {
-
-            },
-            label: {
-                // rotate :-10,
-                offset: [10, 0],
-                show: true,
-                position: 'right',
-                //fontSize: 15,
-                // color: function (params) {
-                //     return colorMap.get(params.name)
-                // },
-                color: 'black',
-
-                borderColor: 'auto',
-                borderWidth: '2px',
-                padding: 3,
-                borderRadius: 5,
-                //shadowColor: 'auto',
-                shadowBlur: 50,
-                // fontWeight:'bold',
-                // formatter: '{c',
-                // lineHeight:25,
-                // backgroundColor:'gray',
-                textBorderColor: 'black',
-                textBorderWidth: 2,
-
-            },
-            barCategoryGap: '50%',
-        },
-
-    ],
-}
 
 
 function initChart(chart_data, title) {
@@ -187,7 +209,7 @@ function initChart(chart_data, title) {
 }
 
 
-
+var data_tiem=document.querySelector("#data_time")
 function draw(all_data) {
     myChart = echarts.init(document.getElementById('mychart'));
     var mesg = all_data.get('mesg')
@@ -200,7 +222,7 @@ function draw(all_data) {
     // console.log(year_data)
     var arr = Array.from(year_data)
     // console.log(arr)
-    initColorMap(category)
+    drawInit(category)
     var i = 0
     var ei = 0
     // console.log(arr[0][1])
@@ -214,7 +236,9 @@ function draw(all_data) {
         }
 
         chart_data = new Map()
-        var title = data[0] + mesg
+        // var title = data[0] + mesg
+        data_tiem.innerHTML=data[0]
+        var title=mesg
         e_data = data[1]
         
 
