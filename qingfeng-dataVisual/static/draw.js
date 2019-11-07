@@ -1,20 +1,20 @@
 // 初始化各个柱状图的颜色
-// var colorMap = new Map()
-// var timeOut=80
-// var barCount=15
+// let colorMap = new Map()
+// let timeOut=80
+// let barCount=15
 
 function initColorMap(category) {
-    var colorSet = new Set()
+    let colorSet = new Set()
     while (true) {
-        var c = 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')'
+        let c = 'rgb(' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ',' + Math.floor(Math.random() * 255) + ')'
         // console.log(c)
         colorSet.add(c)
         if (colorSet.size >= category.length) {
             break
         }
     }
-    var i = 0;
-    var values = colorSet.values()
+    let i = 0;
+    let values = colorSet.values()
     while (true) {
         // console.log(c)
         colorMap.set(category[i], values.next().value)
@@ -43,7 +43,7 @@ function initfontSize(){
     console.log(fontsize)
 }
 
-var option
+let option
 function drawInit(category){
     initfontSize()
     initColorMap(category)
@@ -195,7 +195,7 @@ function drawInit(category){
 
 
 // 基于准备好的dom，初始化echarts实例
-var myChart
+let myChart
 
 
 
@@ -209,25 +209,25 @@ function initChart(chart_data, title) {
 }
 
 
-var data_tiem=document.querySelector("#data_time")
+let data_tiem=document.querySelector("#data_time")
 function draw(all_data) {
     myChart = echarts.init(document.getElementById('mychart'));
-    var mesg = all_data.get('mesg')
-    var i = 0
-    var category = all_data.get('category')
-    var year_data = all_data.get('data')
+    let mesg = all_data.get('mesg')
+    let i = 0
+    let category = all_data.get('category')
+    let year_data = all_data.get('data')
     if (barCount > category.length) {
         barCount = category.length
     }
     // console.log(year_data)
-    var arr = Array.from(year_data)
+    let arr = Array.from(year_data)
     // console.log(arr)
     drawInit(category)
-    var i = 0
-    var ei = 0
+    // let i = 0
+    let ei = 0
     // console.log(arr[0][1])
     data_len = arr[0][1][0]['x_data'].length
-    var c = window.setInterval(function () {
+    let c = window.setInterval(function () {
         data = arr[i]
         if (typeof data == 'undefined') {
             console.log(i + '    end...')
@@ -236,15 +236,15 @@ function draw(all_data) {
         }
 
         chart_data = new Map()
-        // var title = data[0] + mesg
+        // let title = data[0] + mesg
         data_tiem.innerHTML=data[0]
-        var title=mesg
+        let title=mesg
         e_data = data[1]
         
 
         x_data = []
         y_label = []
-        for (var datai = data_len - barCount; datai < data_len; datai = datai + 1) {
+        for (let datai = data_len - barCount; datai < data_len; datai = datai + 1) {
             x_data.push(e_data[ei]['x_data'][datai])
             y_label.push(e_data[ei]['y_label'][datai])
         }

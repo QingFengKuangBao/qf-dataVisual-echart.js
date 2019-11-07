@@ -1,13 +1,13 @@
-var all_data = new Map()
-// var genDataCount=100
+let all_data = new Map()
+// let genDataCount=100
 function getDataFile() {
-    var file = document.querySelector('#data_file').files[0]
-    var d_year = []
-    var category = []
-    var data = []
-    var mesg
+    let file = document.querySelector('#data_file').files[0]
+    let d_year = []
+    let category = []
+    let data = []
+    let mesg
     // console.log(file)
-    var reader = new FileReader()
+    let reader = new FileReader()
     reader.readAsText(file, 'utf-8')
     reader.onload = function (e) {
         // console.log(this)
@@ -47,7 +47,7 @@ function getDataFile() {
                     geni = 0
                     let space = eval(end - start) / genDataCount
                     while (true) {
-                        var v=(parseInt(start) + space * geni).toFixed(decimal)
+                        let v=(parseInt(start) + space * geni).toFixed(decimal)
                         temp.push(v<0?0:v)
                         geni++
                         if (geni > genDataCount) {
@@ -72,16 +72,16 @@ function getDataFile() {
 }
 
 function dealData() {
-    var xy_map = new Map()
-    var category = all_data.get('category')
-    var d_yaer = all_data.get('d_yaer')
-    var data = all_data.get('data')
+    let xy_map = new Map()
+    let category = all_data.get('category')
+    let d_yaer = all_data.get('d_yaer')
+    let data = all_data.get('data')
     // console.log(data)
     for (let i = 1; i < d_yaer.length; i++) {
-        var y_label = new Set()
-        var x_data = []
-        var origi_data = []
-        var data = all_data.get('data')
+        let y_label = new Set()
+        let x_data = []
+        let origi_data = []
+        let data = all_data.get('data')
         for (let datai in data) {
             x_data.push(data[datai][i])
             origi_data.push(data[datai][i])
@@ -94,7 +94,7 @@ function dealData() {
             return a - b
         })
         for (let xi in x_data) {
-            var indexList=getIndex(origi_data,x_data[xi])
+            let indexList=getIndex(origi_data,x_data[xi])
             // console.log(indexList)
             for(let i in indexList){
                 y_label.add(category[indexList[i]])
@@ -118,7 +118,7 @@ function dealData() {
     // console.log(xy_map)
 
     // 对数据进行排序
-    var arrayObj = Array.from(xy_map);
+    let arrayObj = Array.from(xy_map);
     // console.log(arrayObj)
     arrayObj.sort(function (a, b) {
         return a[0].localeCompare(b[0])
@@ -140,7 +140,7 @@ function dealData() {
 
 
 function getIndex(arr,ele){
-    var indexList=[]
+    let indexList=[]
     for(let i=0;i<arr.length;i++){
         if(arr[i]==ele){
             indexList.push(i)
